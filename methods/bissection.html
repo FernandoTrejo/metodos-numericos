@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Métodos Numéricos</title>
+  <!-- math and plotly libraries -->
+  <script src="https://unpkg.com/mathjs@7.1.0/dist/math.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-1.35.2.min.js"></script>
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+  <!-- Our Custom CSS -->
+  <link rel="stylesheet" href="../css/style.css">
+  <!-- Font Awesome JS -->
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+      <div class="sidebar-header">
+        <h3>Métodos</h3>
+      </div>
+      <ul class="list-unstyled components">
+        <p>Seleccionar</p>
+        <li>
+          <a href="../index.html">Home</a>
+        </li>
+        <li class="active">
+          <a href="#raicesEcuaciones" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Raíces de ecuaciones</a>
+          <ul class="collapse list-unstyled" id="raicesEcuaciones">
+            <li class="active">
+              <a href="#">Bisección</a>
+            </li>
+            <li>
+              <a href="regula_falsi.html">Falsa posición</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <!-- Page Content  -->
+    <div id="content">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <button type="button" id="sidebarCollapse" class="btn btn-info">
+            <i class="fas fa-align-justify"></i>
+            <span>Menú</span>
+          </button>
+        </div>
+      </nav>
+      <div class="test">
+        <h2>Método de bisección</h2>
+      </div>
+      <!------ Include the above in your HEAD tag ---------->
+      <section id="tabs" class="project-tab">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <nav>
+                <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                  <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Insertar función</a>
+                  <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Tabla de valores</a>
+                  <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Calcular raíz</a>
+                </div>
+              </nav>
+              <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                  <div>
+                    <div id="plot"></div>
+                    <div class="line">
+                    </div>
+                    <form id="equation" action="#">
+                    <div class="test">
+                        <div class="">
+                          <label class="" for="eq">Función: </label>
+                          <input class="outlinenone" type="text" id="eq" value="(x^2)/(e^4) - 1">
+                        </div>
+                    </div>
+                    <div class="test">
+                      <button type="button" onclick="draw()" class="btn btn-success">
+                      Aceptar
+                      </button>
+                    </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                          <label for="limInfTable">Límite inferior</label>
+                          <input type="text" class="form-control" id="limInfTable">
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label for="limSupTable">Límite superior</label>
+                          <input type="text" class="form-control" id="limSupTable">
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label for="step">Incremento</label>
+                          <input type="text" class="form-control" id="step">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="">
+                      <div class="test">
+                        <button type="button" onclick="crearTabla()" class="btn btn-primary mb-2">Crear Tabla</button>
+                      </div>
+                    </div>
+                    <div class="line">
+                    </div>
+                    <div class="">
+                      <div class="test" id="tablaValores">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                          <label for="limInfMethod">Límite inferior</label>
+                          <input type="text" class="form-control" id="limInfMethod">
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label for="limSupMethod">Límite superior</label>
+                          <input type="text" class="form-control" id="limSupMethod">
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label for="error">Error</label>
+                          <input type="text" value="0.001" class="form-control" id="error">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="">
+                      <div class="test">
+                        <button type="button" onclick="calcular()" class="btn btn-primary mb-2">Calcular raiz</button>
+                      </div>
+                    </div>
+                    <div class="line">
+                    </div>
+                    <div class="">
+                      <div class="test" id="raiz">
+                      </div>
+                    </div>
+                    <div class="">
+                      <div class="test" id="numIteraciones">
+                      </div>
+                    </div>
+                    <div class="line">
+                    </div>
+                    <div class="row">
+                      <div class="test" id="tablaMethod">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="line"></div>
+    </div>
+  </div>
+  <!-- jQuery CDN - Slim version (=without AJAX) -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <!-- Popper.JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/methods/bissection.js"></script>
+</body>
+
+</html>
