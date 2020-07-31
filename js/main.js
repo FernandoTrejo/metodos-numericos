@@ -70,7 +70,7 @@ function crearTabla(){
     let sup = document.getElementById("limSupTable").value;
     let step = document.getElementById("step").value;
     
-    if(inf == "" || sup == "" || step == ""){
+    if(inf == "" || sup == "" || step == "" || step == "0"){
       console.log("Valores vacios");
     }else{
       let table = createTable(Number(inf), Number(sup), Number(step));
