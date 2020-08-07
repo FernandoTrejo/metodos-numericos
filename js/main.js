@@ -1,7 +1,7 @@
 //main functions for the index.html to work
 
 //variables globales
-let formula = "";
+let math_expression = "";
 
 function draw() {
   try {
@@ -21,18 +21,19 @@ function draw() {
       y: yValues,
       type: 'scatter'
     };
-    
+
     const data = [trace1];
     Plotly.newPlot('plot', data);
-    
-    formula = expression;
-    
+
+    math_expression = expression;
+
     //limpiar tablaValores
-    
-    document.getElementById("tablaValores").innerHTML = '';
-    document.getElementById("tablaMethod").innerHTML = '';
-    document.getElementById("raiz").innerHTML = '';
-    document.getElementById("numIteraciones").innerHTML = '';
+
+    document.getElementById("table_values").innerHTML = '';
+    document.getElementById("table_iterations").innerHTML = '';
+    document.getElementById("root").innerHTML = '';
+    document.getElementById("iterations").innerHTML = '';
+
   }
   catch (err) {
     console.error(err);
@@ -40,41 +41,21 @@ function draw() {
   }
 }
 
-function createTable(inf, sup, step) {
-  let table='<table class="table">'
-    +'<thead>'
-      +'<tr>'
-        +'<th>x</th>'
-        +'<th>y</th>'
-      +'</tr>'
-    +'</thead>'
-    +'<tbody>';
-    
-    for(let i = inf; i <= sup; i+=step){
-      let temp = formula.replace(/x/g,"("+i+")");
-      table +='<tr><td>';
-      table += i;
-      table += '</td><td>';
-      table += math.evaluate(temp).toFixed(6);
-      table += '</td></tr>';
-    }
-
-  table+='</tbody></table>';
-  
-  return table;
-}
-
-function crearTabla(){
+function create_table_values() {
   try {
-    let inf = document.getElementById("limInfTable").value;
-    let sup = document.getElementById("limSupTable").value;
-    let step = document.getElementById("step").value;
-    
-    if(inf == "" || sup == "" || step == "" || step == "0"){
+    let inf = document.getElementById("num_lim_inf_table").value;
+    let sup = document.getElementById("num_lim_sup_table").value;
+    let step = document.getElementById("num_step").value;
+
+    if (inf == "" || sup == "" || step == "" || step == "0") {
       console.log("Valores vacios");
-    }else{
-      let table = createTable(Number(inf), Number(sup), Number(step));
-      document.getElementById("tablaValores").innerHTML = table;
+    } else {
+      let data = [];
+      for (let i = Number(inf); i <= Number(sup); i += Number(step)) {
+        data.push([i, evaluate_expression(math_expression, "x", i)]);
+      }
+      let table = create_table_html(["x", "f(x)"], data);
+      document.getElementById("table_values").innerHTML = table;
     }
   } catch (e) {
     console.log(e);

@@ -14,8 +14,7 @@
     <link rel="stylesheet" href="css/style.css">
 
     <!-- Font Awesome JS -->
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -28,15 +27,16 @@
 
             <ul class="list-unstyled components">
                 <p>Seleccionar</p>
-                <li class="active">Home</li>
+                <li class="active">
+                  <a href="#">
+                    <i class="fa fa-home" aria-hidden="true"> Home</i>
+                  </a>
+                </li>
                 <li class="">
                     <a href="#raicesEcuaciones" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Raíces de ecuaciones</a>
                     <ul class="collapse list-unstyled" id="raicesEcuaciones">
                         <li>
-                          <a href="methods/bissection.html">Bisección</a>
-                        </li>
-                        <li>
-                          <a href="methods/regula_falsi">Falsa posición</a>
+                          <a href="methods/metodos_cerrados.html">Metodos Cerrados</a>
                         </li>
                     </ul>
                 </li>
@@ -50,7 +50,7 @@
                 <div class="container-fluid">
 
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
-                        <i class="fas fa-align-justify"></i>
+                        <i class="fa fa-align-justify"></i>
                         <span>Menú</span>
                     </button>
 

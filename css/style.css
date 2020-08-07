@@ -7,6 +7,10 @@
   margin-top: 20px;
 }
 
+.separator {
+  margin: 20px 0;
+}
+
 .outlinenone {
    outline: none;
    background-color: #04B4AE;
