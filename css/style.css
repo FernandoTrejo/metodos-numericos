@@ -178,8 +178,8 @@ a.article:hover {
 
 /*TABS STYLE*/
 .project-tab{
-  padding: 10%;
-  margin-top: -8%;
+  /*padding: 10%;
+  margin-top: 8%;*/
 }
 
 .project-tab #tabs{

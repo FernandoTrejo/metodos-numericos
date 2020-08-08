@@ -133,14 +133,19 @@ function calculate_root() {
       let rad_regula_falsi = document.getElementById("rad_regula_falsi");
       
       let method = (rad_bissection.checked) ? rad_bissection.value : rad_regula_falsi.value;
+      
+      let columns_hid;
+      
       switch (method) {
         case 'bissection':
           result = bissection(Number(a), Number(b), math_expression, Number(tolerance));
           column_root = 5;
+          columns_hid = [4,6,7];
           break;
         case 'regula_falsi':
           result = regula_falsi(Number(a), Number(b), math_expression, Number(tolerance));
           column_root = 6;
+          columns_hid = [4,5,7,8];
           break;
       }
       
@@ -158,7 +163,13 @@ function calculate_root() {
           }
       };
       
-      let table = create_table_html(result.table_headers,result.table_data,table_colors);
+      let column_classes = {
+        col_class: "d-none d-lg-table-cell",
+        ids: columns_hid
+      };
+      
+      let table = create_table_html(result.table_headers,result.table_data,table_colors,column_classes);
+      console.log(table);
       
       let res = {
         table_iterations: table,
@@ -179,4 +190,16 @@ function change_text_button() {
   let button = document.getElementById("btn_calculate_root");
   
   button.innerText = (rad_bissection.checked) ? 'Calcular con Bisección' : 'Calcular con Regula Falsi';
+}
+
+function show_iteration_details(row,headers) {
+  let new_headers = ["Campo","Valor"];
+  let new_data = [];
+  
+  for(let i=0; i<row.length; i++){
+    new_data.push([headers[i],row[i]]);
+  }
+  
+  let table = create_table_html(new_headers,new_data);
+  document.getElementById("iteration_table").innerHTML = table;
 }

@@ -44,19 +44,20 @@
     <!-- Page Content  -->
     <div id="content">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
+        <div class="container">
           <button type="button" id="sidebarCollapse" class="btn btn-info">
             <i class="fa fa-align-justify"></i>
             <span>Menú</span>
           </button>
         </div>
       </nav>
-      <div class="test">
+      <div class="d-flex justify-content-center">
         <h2>Métodos Cerrados</h2>
       </div>
-      <!------ Include the above in your HEAD tag ---------->
+      <div class="separator"></div>
+      <!---------------->
       <section id="tabs" class="project-tab">
-        <div class="container">
+        <div class="container-fluid" style="">
           <div class="row">
             <div class="col-md-12">
               <nav>
@@ -77,10 +78,10 @@
                     </div>
                     <form id="equation" action="#">
                       <div class="d-flex justify-content-center" style="background: lightslategrey;padding: 14px">
-                        <div class="align-self-center">
+                        <div class="align-self-center" style="margin-right: 2px">
                           <input class="outlinenone" type="text" id="eq" value="sin(x^2)-2(x)+2">
                         </div>
-                        <div class="align-self-center">
+                        <div class="align-self-center" style="margin-left: 2px">
                           <button type="button" onclick="draw()" class="btn btn-info">
                             <i class="fa fa-paper-plane" aria-hidden="true"></i>
                           </button>
@@ -90,33 +91,34 @@
                   </div>
                 </div>
                 <div class="tab-pane fade" id="nav-table" role="tabpanel" aria-labelledby="nav-table-tab">
-                  <div class="container">
+                  <div class="container-fluid">
                     <div class="row">
-                      <div class="col-sm">
+                      <div class="col-lg col-md-6 col-sm-12">
                         <div class="form-group">
                           <label for="num_lim_inf_table">Límite inferior</label>
                           <input type="number" class="form-control" id="num_lim_inf_table">
                         </div>
                       </div>
-                      <div class="col-sm">
+                      <div class="col-lg col-md-6 col-sm-12">
                         <div class="form-group">
                           <label for="num_lim_sup_table">Límite superior</label>
                           <input type="number" class="form-control" id="num_lim_sup_table">
                         </div>
                       </div>
-                      <div class="col-sm">
+                      <div class="col-lg col-md-6 col-sm-12">
                         <div class="form-group">
                           <label for="num_step">Incremento</label>
                           <input type="number" min="1" value="1" class="form-control" id="num_step">
                         </div>
                       </div>
                     </div>
+                    <div class="separator"></div>
                     <div class="row">
                       <div class="col-md d-flex justify-content-center">
                         <button type="button" onclick="create_table_values()" class="btn btn-primary mb-2">Crear Tabla</button>
                       </div>
                     </div>
-                    
+                    <div class="separator"></div>
                     <div class="row">
                       <div class="col-md d-flex justify-content-center" id="table_values">
                       </div>
@@ -141,19 +143,19 @@
                       </div>
                     </div>
                     <div class="row d-flex justify-content-center">
-                      <div class="col-sm">
+                      <div class="col-lg col-md-6 col-sm-12">
                         <div class="form-group">
                           <label for="num_lim_inf_method">Límite inferior</label>
                           <input type="number" class="form-control" id="num_lim_inf_method">
                         </div>
                       </div>
-                      <div class="col-sm">
+                      <div class="col-lg col-md-6 col-sm-12">
                         <div class="form-group">
                           <label for="num_lim_sup_method">Límite superior</label>
                           <input type="number" class="form-control" id="num_lim_sup_method">
                         </div>
                       </div>
-                      <div class="col-sm">
+                      <div class="col-lg col-md-6 col-sm-12">
                         <div class="form-group">
                           <label for="num_error">Error</label>
                           <input type="number" value="0.001" class="form-control" id="num_tolerance">
@@ -185,10 +187,31 @@
                     
                     <div class="separator"></div>
                     
-                    <div class="test">
-                      <div class="" id="table_iterations">
+                    <div class="row">
+                      <div class="col d-flex justify-content-center" id="table_iterations" style="overflow-x:auto">
                       </div>
                     </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="details_iteration" tabindex="-1" role="dialog" aria-labelledby="details_iteration_title" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="">Detalle Iteración</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body" id="iteration_table">
+                            ...
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
                   </div>
                 </div>
               </div>
