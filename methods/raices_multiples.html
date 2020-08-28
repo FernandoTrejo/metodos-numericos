@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <script src="https://unpkg.com/mathjs@7.1.0/dist/math.min.js"></script>
+</head>
+
+<body>
+<div id="res">
+  
+</div>
+
+<script src="../js/functions.js">
+</script>
+<script src="../js/methods/raices_multiples.js">
+</script>
+<script type="text/javascript" charset="utf-8">
+  let exp = "x^4 - 3(x^3) + x^2 + x + 1";
+  let res = muller(1,2,exp,0.001);
+  let table = create_table_html(res.table_headers,res.table_data);
+  
+  document.getElementById("res").innerHTML=table;
+  console.log(res);
+</script>
+</body>
+
+</html>

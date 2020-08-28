@@ -10,16 +10,16 @@ function punto_fijo(x,expression,tolerance){
   while(error > tolerance){
     i++;
     
-    error = math.abs((root - last_root)/root * 100); 
-    
     previous_x = root;
     root = evaluate_expression(expression,"x",previous_x);
     last_root = previous_x;
     
+    error = math.abs((root - last_root)/root * 100); 
+    
     if(i==1){
-      data.push(i,previous_x,root,"--");
+      data.push([i,previous_x,root,"--"]);
     }else{
-      data.push(i,previous_x,root,error);
+      data.push([i,previous_x,root,error]);
     }
   }
   
@@ -48,8 +48,6 @@ function newton_raphson(x,expression,derivative_expression,tolerance){
   while (error > tolerance) {
     i++;
     
-    error = math.abs((root - last_root)/root * 100); 
-    
     previous_x = root;
     
     result_function = evaluate_expression(expression,"x",previous_x);
@@ -58,10 +56,12 @@ function newton_raphson(x,expression,derivative_expression,tolerance){
     root = previous_x - (result_function/result_derivative);
     last_root = previous_x;
     
+    error = math.abs((root - last_root)/root * 100); 
+    
     if (i == 1) {
-      data.push(i, previous_x,result_function,result_derivative, root, "--");
+      data.push([i, previous_x,result_function,result_derivative, root, "--"]);
     } else {
-      data.push(i, previous_x,result_function,result_derivative, root, error);
+      data.push([i, previous_x,result_function,result_derivative, root, error]);
     }
   }
 
@@ -91,10 +91,8 @@ function secante(previous_x,x,expression,tolerance){
   while (error > tolerance) {
     i++;
     
-    error = math.abs((root - last_root)/root * 100);
-    
     if (i == 1) {
-      data.push(i,last_root, "--", "--", "--", "--");
+      data.push([i,last_root, "--", "--", "--", "--"]);
     } else {
       root = next_root;
       
@@ -102,7 +100,12 @@ function secante(previous_x,x,expression,tolerance){
       result_function_last_root = evaluate_expression(expression,"x",last_root);
       diference = root - last_root;
       next_root = root - (result_function_root*diference / (result_function_root - result_function_last_root));
-      data.push(i, root, result_function_root, result_function_last_root, diference, error);
+      
+      error = math.abs((root - last_root)/root * 100);
+      
+      last_root = root;
+      
+      data.push([i, root, result_function_root, result_function_last_root, diference, error]);
     }
   }
   

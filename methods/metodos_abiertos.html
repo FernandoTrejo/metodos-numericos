@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <script src="https://unpkg.com/mathjs@7.1.0/dist/math.min.js"></script>
+</head>
+
+<body>
+
+<div id="res">
+  
+</div>
+
+<div id="res2">
+  
+</div>
+
+<script src="../js/functions.js">
+</script>
+<script src="../js/methods/metodos_abiertos.js">
+</script>
+
+<script type="text/javascript" charset="utf-8">
+  /*let math_exp = "490/(9.81*(1-e^(-(98/x))))";
+  
+  let res = punto_fijo(63,math_exp,0.001);
+  
+  document.getElementById("res").innerHTML = res;
+  console.log(res);*/
+  let math_exp = "e^(-x) - log(x)";
+  let derivative = "-e^(-x) - 1/x";
+  let res = newton_raphson(3,math_exp,derivative,0.001);
+  
+  let table = create_table_html(res.table_headers,res.table_data);
+  
+  document.getElementById("res").innerHTML = table;
+  console.log(res);
+  
+  /*let math_exp = "e^(-x) - log(x)";
+  console.log(math.derivative(math_exp,'x').evaluate({x: 3}));*/
+  
+  let exp = "e^(-x) - x";
+  let res2 = secante(2,5,exp,0.001);
+  let table2 = create_table_html(res2.table_headers,res2.table_data);
+  
+  document.getElementById("res2").innerHTML = table2;
+  console.log(res2);
+</script>
+
+</body>
+
+</html>
