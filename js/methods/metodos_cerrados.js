@@ -122,7 +122,7 @@ function calculate_root() {
   let tolerance = document.getElementById("num_tolerance").value;
   
   if (a == "" || b == "" || tolerance == "") {
-    console.log("valores vacios")
+    console.log("valores vacios");
   } else {
     try {
       let result;
@@ -151,24 +151,31 @@ function calculate_root() {
       
       let last_row = result.table_data.length;
       
-      let table_colors = {
-        columns: {
-            style: "background: lightgreen",
-            ids: [column_root]
+      let attributes = {
+        tab_container: {style:["overflow-x:auto"]},
+        tab: {class: ["table","table-responsive-md", "table-hover"]},
+        thead: {},
+        rows: {
+          comm: {
+            data_target: ["#details_iteration"],
+            data_toggle: ["modal"],
+            onclick: ["show_row_details(_args_)"] 
           },
-          rows: {
-            thead: "",
-            style: "background: lightblue",
-            ids: [last_row]
+          spec: {
+            set: [last_row],
+            style: ["background: lightblue"]
           }
+        },
+        columns: {
+          comm: {},
+          spec: {
+            set: columns_hid,
+            class: ["d-none","d-lg-table-cell"]
+          }
+        }
       };
       
-      let column_classes = {
-        col_class: "d-none d-lg-table-cell",
-        ids: columns_hid
-      };
-      
-      let table = create_table_html(result.table_headers,result.table_data,table_colors,column_classes);
+      let table = create_table_html(result.table_headers,result.table_data,attributes);
       console.log(table);
       
       let res = {
@@ -192,14 +199,18 @@ function change_text_button() {
   button.innerText = (rad_bissection.checked) ? 'Calcular con Bisección' : 'Calcular con Regula Falsi';
 }
 
-function show_iteration_details(row,headers) {
+function show_row_details(row,headers) {
   let new_headers = ["Campo","Valor"];
   let new_data = [];
+  let attributes = getAttributeObject();
+  attributes.tab = {class: ["table","table-responsive-md", "table-hover"]};
+  
+  console.log(attributes);
   
   for(let i=0; i<row.length; i++){
     new_data.push([headers[i],row[i]]);
   }
   
-  let table = create_table_html(new_headers,new_data);
+  let table = create_table_html(new_headers,new_data,attributes);
   document.getElementById("iteration_table").innerHTML = table;
 }

@@ -54,7 +54,10 @@ function create_table_values() {
       for (let i = Number(inf); i <= Number(sup); i += Number(step)) {
         data.push([i, evaluate_expression(math_expression, "x", i)]);
       }
-      let table = create_table_html(["x", "f(x)"], data);
+      
+      let attributes = getAttributeObject();
+      attributes.tab = {class: ["table","table-responsive-md", "table-hover"]};
+      let table = create_table_html(["x", "f(x)"], data,attributes);
       document.getElementById("table_values").innerHTML = table;
     }
   } catch (e) {
