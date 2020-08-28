@@ -204,3 +204,11 @@ function evaluate_expression(expression, variable, value) {
     console.log(e);
   }
 }
+
+function evaluate_derivative(expression, variable, value){
+  try {
+    return math.derivative(expression,variable).evaluate({x: value});
+  } catch (e) {
+    console.log(e);
+  }
+}
