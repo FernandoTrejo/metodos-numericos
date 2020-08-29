@@ -5,7 +5,7 @@ function punto_fijo(x,expression,tolerance){
   let i = 0;
   let error = 100;
   let data = [];
-  let headers = ["i","Xi","Xr","Error"];
+  let headers = ["i","Xi","x = f(x)","Error"];
   
   while(error > tolerance){
     i++;
@@ -43,7 +43,7 @@ function newton_raphson(x,expression,derivative_expression,tolerance){
   let i = 0;
   let error = 100;
   let data = [];
-  let headers = ["i","Xn-1","f(Xn-1)","f'(Xn-1)","Xn","Error"];
+  let headers = ["i","Xn-1","y = f(Xn-1)","dy/dx","Xn","Error"];
   
   while (error > tolerance) {
     i++;
@@ -129,6 +129,7 @@ function show_results(result) {
 }
 
 function calculate_root() {
+  let res_html = {};
   let result;
   let columns_hid;
   
@@ -144,7 +145,12 @@ function calculate_root() {
   
     if(validate_args(prev_x,x,tolerance)){
       result = secante(Number(prev_x), Number(x), math_expression, Number(tolerance));
-    
+      
+      res_html = {
+        se_table_iterations: "",
+        se_root: "",
+        se_iterations: ""
+      };
       columns_hid = [2];
     }
   }
@@ -157,6 +163,11 @@ function calculate_root() {
     if(validate_args(x,derivative,tolerance)){
       result = newton_raphson(Number(x), math_expression, derivative, Number(tolerance));
       
+      res_html = {
+        nr_table_iterations: "",
+        nr_root: "",
+        nr_iterations: ""
+      };
       columns_hid = [2];
     }
   }
@@ -169,6 +180,11 @@ function calculate_root() {
     if(validate_args(x,equation,tolerance)){
       result = punto_fijo(Number(x), equation, Number(tolerance));
       
+      res_html = {
+        pf_table_iterations: "",
+        pf_root: "",
+        pf_iterations: ""
+      };
       columns_hid = [2];
     }
   }
@@ -200,14 +216,20 @@ function calculate_root() {
   };
   
   let table = create_table_html(result.table_headers, result.table_data, attributes);
-  console.log(table);
+  console.log(table)
+  let arr = [
+    table,
+    "<span><b>Raíz: </b>" + result.res_root + "</span>",
+    "<span><b>Iteraciones:</b> " + result.res_iterations + "</span>"
+  ];
   
-  let res = {
-    table_iterations: table,
-    root: "<span><b>Raíz: </b>" + result.res_root + "</span>",
-    iterations: "<span><b>Iteraciones:</b> " + result.res_iterations + "</span>"
-  };
-  show_results(res);
+  let i = 0;
+  for(let attr in res_html){
+    res_html[attr] = arr[i]
+    i++;
+  }
+
+  show_results(res_html);
         
 }
 
@@ -256,22 +278,51 @@ function ocultar_divs(rad_checked){
   let div_newton_raphson = document.getElementById("div_newton_raphson");
   let div_secante = document.getElementById("div_secante");
   
+  //results
+  let pf_results = document.getElementById("pf_results");
+  let nr_results = document.getElementById("nr_results");
+  let se_results = document.getElementById("se_results");
+  
   switch(rad_checked){
     case 'punto_fijo':
       div_secante.classList.add("d-none");
       div_newton_raphson.classList.add("d-none");
       div_punto_fijo.classList.remove("d-none");
+      
+      nr_results.classList.add("d-none");
+      se_results.classList.add("d-none");
+      pf_results.classList.remove("d-none");
       break;
     case 'newton_raphson':
       div_secante.classList.add("d-none");
       div_newton_raphson.classList.remove("d-none");
       div_punto_fijo.classList.add("d-none");
+      
+      nr_results.classList.remove("d-none");
+      se_results.classList.add("d-none");
+      pf_results.classList.add("d-none");
       break;
     case 'secante':
       div_secante.classList.remove("d-none");
       div_newton_raphson.classList.add("d-none");
       div_punto_fijo.classList.add("d-none");
+      
+      nr_results.classList.add("d-none");
+      se_results.classList.remove("d-none");
+      pf_results.classList.add("d-none");
       break;
+  }
+}
+
+function check_derivative(){
+  let auto = document.getElementById("nr_check_derivative");
+  let txt_derivative = document.getElementById("nr_txt_derivative_method");
+  
+  if(auto.checked){
+    txt_derivative.value = calculate_derivative(math_expression,"x");
+    txt_derivative.setAttribute("readonly","true");
+  }else{
+    txt_derivative.removeAttribute("readonly");
   }
 }
 
@@ -287,6 +338,36 @@ function show_row_details(row,headers) {
     new_data.push([headers[i],row[i]]);
   }
   
+  console.log(new_data);
+  
   let table = create_table_html(new_headers,new_data,attributes);
+  console.log(table);
+  
+  
   document.getElementById("iteration_table").innerHTML = table;
+}
+
+function clear_all_divs() {
+  document.getElementById("pf_root").innerHTML = '';
+  document.getElementById("pf_iterations").innerHTML = '';
+  document.getElementById("pf_table_iterations").innerHTML = '';
+  document.getElementById("pf_num_x_method").innerHTML = '';
+  document.getElementById("pf_num_tolerance").innerHTML = '';
+  document.getElementById("pf_txt_equation_method").innerHTML = '';
+  
+  
+  document.getElementById("se_root").innerHTML = '';
+  document.getElementById("se_iterations").innerHTML = '';
+  document.getElementById("se_table_iterations").innerHTML = '';
+  document.getElementById("se_num_prev_x_method").innerHTML = '';
+  document.getElementById("se_num_x_method").innerHTML = '';
+  document.getElementById("se_num_tolerance").innerHTML = '';
+  
+  
+  document.getElementById("nr_root").innerHTML = '';
+  document.getElementById("nr_iterations").innerHTML = '';
+  document.getElementById("nr_table_iterations").innerHTML = '';
+  document.getElementById("nr_num_x_method").innerHTML = '';
+  document.getElementById("nr_num_tolerance").innerHTML = '';
+  document.getElementById("nr_txt_derivative_method").innerHTML = '';
 }

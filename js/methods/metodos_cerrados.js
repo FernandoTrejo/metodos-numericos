@@ -214,3 +214,10 @@ function show_row_details(row,headers) {
   let table = create_table_html(new_headers,new_data,attributes);
   document.getElementById("iteration_table").innerHTML = table;
 }
+
+function clear_all_divs(){
+  document.getElementById("table_values").innerHTML = '';
+  document.getElementById("table_iterations").innerHTML = '';
+  document.getElementById("root").innerHTML = '';
+  document.getElementById("iterations").innerHTML = '';
+}

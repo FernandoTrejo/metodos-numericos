@@ -153,7 +153,12 @@ function create_table_html(headers, data, attributes = {}) {
         row_attr = row_comm_attr;
       }
     }
-    row_attr = row_attr.replace('_args_',`[${row}],[${str_headers.join()}]`);
+    
+    let new_row = [];
+    for(let value of row){
+      new_row.push(`'${value}'`);
+    }
+    row_attr = row_attr.replace('_args_',`[${new_row}],[${str_headers.join()}]`);
     table += `<tr ${row_attr}>`;
     
     col_iterator = 0;
@@ -208,6 +213,14 @@ function evaluate_expression(expression, variable, value) {
 function evaluate_derivative(expression, variable, value){
   try {
     return math.derivative(expression,variable).evaluate({x: value});
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+function calculate_derivative(expression, variable) {
+  try {
+    return math.derivative(expression, variable);
   } catch (e) {
     console.log(e);
   }

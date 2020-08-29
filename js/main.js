@@ -29,10 +29,7 @@ function draw() {
 
     //limpiar tablaValores
 
-    document.getElementById("table_values").innerHTML = '';
-    document.getElementById("table_iterations").innerHTML = '';
-    document.getElementById("root").innerHTML = '';
-    document.getElementById("iterations").innerHTML = '';
+    clear_all_divs();
 
   }
   catch (err) {

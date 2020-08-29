@@ -55,7 +55,7 @@
         </div>
       </nav>
       <div class="d-flex justify-content-center">
-        <h2>Métodos Cerrados</h2>
+        <h2>Métodos Abiertos</h2>
       </div>
       <div class="separator"></div>
       <!---------------->
@@ -183,6 +183,8 @@
                           <div class="form-group">
                             <label for="nr_txt_derivative_method">Función derivada (op)</label>
                             <input type="text" class="form-control" id="nr_txt_derivative_method">
+                            <input type="checkbox" id="nr_check_derivative" onclick="check_derivative()" />
+                            <span>Automático</span>
                           </div>
                         </div>
                         <div class="col-lg col-md-6 col-sm-12">
@@ -229,22 +231,57 @@
                     
                     <div class="separator"></div>
                     
-                    <div class="row">
-                      <div class="col-md d-flex justify-content-center" id="root">
+                    <div id="pf_results">
+                      <div class="row">
+                        <div class="col-md d-flex justify-content-center" id="pf_root"></div>
+                      </div>
+                      
+                      <div class="separator"></div>
+                    
+                      <div class="row">
+                        <div class="col-md d-flex justify-content-center" id="pf_iterations"></div>
+                      </div>
+                      
+                      <div class="separator"></div>
+                    
+                      <div class="row">
+                        <div class="col d-flex justify-content-center" id="pf_table_iterations"></div>
                       </div>
                     </div>
                     
-                    <div class="separator"></div>
+                    <div id="nr_results">
+                      <div class="row">
+                        <div class="col-md d-flex justify-content-center" id="nr_root"></div>
+                      </div>
+                      
+                      <div class="separator"></div>
                     
-                    <div class="row">
-                      <div class="col-md d-flex justify-content-center" id="iterations">
+                      <div class="row">
+                        <div class="col-md d-flex justify-content-center" id="nr_iterations"></div>
+                      </div>
+                      
+                      <div class="separator"></div>
+                    
+                      <div class="row">
+                        <div class="col d-flex justify-content-center" id="nr_table_iterations"></div>
                       </div>
                     </div>
                     
-                    <div class="separator"></div>
+                    <div id="se_results">
+                      <div class="row">
+                        <div class="col-md d-flex justify-content-center" id="se_root"></div>
+                      </div>
+                      
+                      <div class="separator"></div>
                     
-                    <div class="row">
-                      <div class="col d-flex justify-content-center" id="table_iterations">
+                      <div class="row">
+                        <div class="col-md d-flex justify-content-center" id="se_iterations"></div>
+                      </div>
+                      
+                      <div class="separator"></div>
+                    
+                      <div class="row">
+                        <div class="col d-flex justify-content-center" id="se_table_iterations"></div>
                       </div>
                     </div>
 
@@ -283,40 +320,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
   <!-- Bootstrap JS -->
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+  <script src="../js/methods/metodos_abiertos.js"></script>
   <script src="../js/main.js"></script>
   <script src="../js/functions.js"></script>
-  <script src="../js/methods/metodos_abiertos.js"></script>
-</body>
-
-</html>
-
-<script type="text/javascript" charset="utf-8">
-  /*let math_exp = "490/(9.81*(1-e^(-(98/x))))";
-  
-  let res = punto_fijo(63,math_exp,0.001);
-  
-  document.getElementById("res").innerHTML = res;
-  console.log(res);*/
-  /*let math_exp = "e^(-x) - log(x)";
-  let derivative = "-e^(-x) - 1/x";
-  let res = newton_raphson(3,math_exp,derivative,0.001);
-  
-  let table = create_table_html(res.table_headers,res.table_data);
-  
-  document.getElementById("res").innerHTML = table;
-  console.log(res);*/
-  
-  /*let math_exp = "e^(-x) - log(x)";
-  console.log(math.derivative(math_exp,'x').evaluate({x: 3}));*/
-  
-  /*let exp = "e^(-x) - x";
-  let res2 = secante(2,5,exp,0.001);
-  let table2 = create_table_html(res2.table_headers,res2.table_data);
-  
-  document.getElementById("res2").innerHTML = table2;
-  console.log(res2);*/
-</script>
-
 </body>
 
 </html>
