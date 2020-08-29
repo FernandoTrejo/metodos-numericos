@@ -2,29 +2,249 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
-    <script src="https://unpkg.com/mathjs@7.1.0/dist/math.min.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Métodos Numéricos</title>
+  <!-- math and plotly libraries -->
+  <script src="https://unpkg.com/mathjs@7.1.0/dist/math.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-1.35.2.min.js"></script>
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+  <!-- Our Custom CSS -->
+  <link rel="stylesheet" href="../css/style.css">
+  <!-- Font Awesome JS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
-<div id="res">
-  
-</div>
+  <div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+      <div class="sidebar-header">
+        <h3>Métodos</h3>
+      </div>
+      <ul class="list-unstyled components">
+        <p>Seleccionar</p>
+        <li>
+          <a href="../index.html">
+            <i class="fa fa-home" aria-hidden="true"> Home</i>
+          </a>
+        </li>
+        <li class="">
+          <a href="#raicesEcuaciones" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Raíces de ecuaciones</a>
+          <ul class="collapse list-unstyled" id="raicesEcuaciones">
+            <li class="active">
+              <a href="metodos_cerrados.html">Metodos Cerrados</a>
+            </li>
+            <li>
+              <a href="metodos_abiertos.html">Metodos Abiertos</a>
+            </li>
+            <li>
+              <a href="#">Raices Múltiples</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <!-- Page Content  -->
+    <div id="content">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+          <button type="button" id="sidebarCollapse" class="btn btn-info">
+            <i class="fa fa-align-justify"></i>
+            <span>Menú</span>
+          </button>
+        </div>
+      </nav>
+      <div class="d-flex justify-content-center">
+        <h2>Raíces Múltiples</h2>
+      </div>
+      <div class="separator"></div>
+      <!---------------->
+      <section id="tabs" class="project-tab">
+        <div class="container-fluid" style="">
+          <div class="row">
+            <div class="col-md-12">
+              <nav>
+                <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                  <a class="nav-item nav-link active" id="nav-insert-tab" data-toggle="tab" href="#nav-insert" role="tab" aria-controls="nav-insert" aria-selected="true">Insertar función</a>
+                  <a class="nav-item nav-link" id="nav-table-tab" data-toggle="tab" href="#nav-table" role="tab" aria-controls="nav-table" aria-selected="false">Tabla de valores</a>
+                  <a class="nav-item nav-link" id="nav-calculate-tab" data-toggle="tab" href="#nav-calculate" role="tab" aria-controls="nav-calculate" aria-selected="false">Calcular raíz</a>
+                </div>
+              </nav>
+              <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-insert" role="tabpanel" aria-labelledby="nav-insert-tab">
+                  <div style="background: lightslategrey">
+                    <div id="plot"></div>
+                    <div class="d-flex flex-row-reverse" style="background: #eee">
+                      <div class="p-2">
+                        <i class="fa fa-angle-up fa-2x" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                    <form id="equation" action="#">
+                      <div class="d-flex justify-content-center" style="background: lightslategrey;padding: 14px">
+                        <div class="align-self-center" style="margin-right: 2px">
+                          <input class="outlinenone" type="text" id="eq" value="sin(x^2)-2(x)+2">
+                        </div>
+                        <div class="align-self-center" style="margin-left: 2px">
+                          <button type="button" onclick="draw()" class="btn btn-info">
+                            <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="nav-table" role="tabpanel" aria-labelledby="nav-table-tab">
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-lg col-md-6 col-sm-12">
+                        <div class="form-group">
+                          <label for="num_lim_inf_table">Límite inferior</label>
+                          <input type="number" class="form-control" id="num_lim_inf_table">
+                        </div>
+                      </div>
+                      <div class="col-lg col-md-6 col-sm-12">
+                        <div class="form-group">
+                          <label for="num_lim_sup_table">Límite superior</label>
+                          <input type="number" class="form-control" id="num_lim_sup_table">
+                        </div>
+                      </div>
+                      <div class="col-lg col-md-6 col-sm-12">
+                        <div class="form-group">
+                          <label for="num_step">Incremento</label>
+                          <input type="number" min="1" value="1" class="form-control" id="num_step">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="separator"></div>
+                    <div class="row">
+                      <div class="col-md d-flex justify-content-center">
+                        <button type="button" onclick="create_table_values()" class="btn btn-primary mb-2">Crear Tabla</button>
+                      </div>
+                    </div>
+                    <div class="separator"></div>
+                    <div class="row">
+                      <div class="col-md d-flex justify-content-center" id="table_values">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="nav-calculate" role="tabpanel" aria-labelledby="nav-calculate-tab">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-md">
+                        <div class="separator"></div>
+                        <div class="d-flex justify-content-center">
+                          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                          <label class="btn btn-info active">
+                            <input type="radio" name="method" id="rad_muller" value="muller" autocomplete="off" onchange="change_text_button()" checked> Müller
+                          </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row d-flex justify-content-center">
+                      <div class="col-lg col-md-6 col-sm-12">
+                        <div class="form-group">
+                          <label for="mu_num_x1_method">x1</label>
+                          <input type="number" class="form-control" id="mu_num_x1_method">
+                        </div>
+                      </div>
+                      <div class="col-lg col-md-6 col-sm-12">
+                        <div class="form-group">
+                          <label for="mu_num_x2_method">x2</label>
+                          <input type="number" class="form-control" id="mu_num_x2_method">
+                        </div>
+                      </div>
+                      <div class="col-lg col-md-6 col-sm-12">
+                        <div class="form-group">
+                          <label for="mu_num_tolerance">Error</label>
+                          <input type="number" value="0.001" class="form-control" id="mu_num_tolerance">
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="separator"></div>
+                    
+                    <div class="row">
+                      <div class="col-md d-flex justify-content-center">
+                        <button type="button" onclick="calculate_root()" class="btn btn-primary mb-2" id="btn_calculate_root">Calcular con Müller</button>
+                      </div>
+                    </div>
+                    
+                    <div class="separator"></div>
+                    
+                    <div id="div_muller">
+                      <div class="row">
+                        <div class="col-md d-flex justify-content-center" id="mu_root">
+                        </div>
+                      </div>
+                      
+                      <div class="separator"></div>
+                      
+                      <div class="row">
+                        <div class="col-md d-flex justify-content-center" id="mu_iterations">
+                        </div>
+                      </div>
+                      
+                      <div class="separator"></div>
+                      
+                      <div class="row">
+                        <div class="col d-flex justify-content-center" id="mu_table_iterations">
+                        </div>
+                      </div>
+                    </div>
 
-<script src="../js/functions.js">
-</script>
-<script src="../js/methods/raices_multiples.js">
-</script>
+                    <!-- Modal -->
+                    <div class="modal fade" id="details_iteration" tabindex="-1" role="dialog" aria-labelledby="details_iteration_title" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="">Detalle Iteración</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body" id="iteration_table">
+                            ...
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <!-- jQuery CDN - Slim version (=without AJAX) -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <!-- Popper.JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+  <script src="../js/methods/raices_multiples.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/functions.js"></script>
+</body>
+
+</html>
+
+
 <script type="text/javascript" charset="utf-8">
-  let exp = "x^4 - 3(x^3) + x^2 + x + 1";
+ /* let exp = "x^4 - 3(x^3) + x^2 + x + 1";
   let res = muller(1,2,exp,0.001);
   let table = create_table_html(res.table_headers,res.table_data);
   
   document.getElementById("res").innerHTML=table;
-  console.log(res);
+  console.log(res);*/
 </script>
-</body>
-
-</html>
