@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <!-- math and plotly libraries -->
+  <script src="https://unpkg.com/mathjs@7.1.0/dist/math.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-1.35.2.min.js"></script>
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+  <!-- Our Custom CSS -->
+  <link rel="stylesheet" href="../css/style.css">
+  <!-- Font Awesome JS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+      <div class="sidebar-header">
+        <h3>Métodos</h3>
+      </div>
+      <ul class="list-unstyled components">
+        <p>Seleccionar</p>
+        <li>
+          <a href="../index.html">
+            <i class="fa fa-home" aria-hidden="true"> Home</i>
+          </a>
+        </li>
+        <li class="">
+          <a href="#raicesEcuaciones" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Raíces de ecuaciones</a>
+          <ul class="collapse list-unstyled" id="raicesEcuaciones">
+            <li class="active">
+              <a href="metodos_cerrados.html">Metodos Cerrados</a>
+            </li>
+            <li>
+              <a href="metodos_abiertos.html">Metodos Abiertos</a>
+            </li>
+            <li>
+              <a href="raices_multiples.html">Raices Múltiples</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <!-- Page Content  -->
+    <div id="content">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+          <button type="button" id="sidebarCollapse" class="btn btn-info">
+            <i class="fa fa-align-justify"></i>
+            <span>Menú</span>
+          </button>
+        </div>
+      </nav>
+      <div class="d-flex justify-content-center">
+        <h2>Raíces Múltiples</h2>
+      </div>
+      <div class="separator"></div>
+      <!---------------->
+      <section id="tabs" class="project-tab">
+        <div class="container-fluid" style="">
+          <div class="row">
+            <div class="col-md-12">
+              <nav>
+                <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                  <a class="nav-item nav-link active" id="nav-adjunta-tab" data-toggle="tab" href="#nav-adjunta" role="tab" aria-controls="nav-adjunta" aria-selected="true">Adjunta</a>
+                  <a class="nav-item nav-link" id="nav-crammer-tab" data-toggle="tab" href="#nav-crammer" role="tab" aria-controls="nav-crammer" aria-selected="false">Crammer</a>
+                </div>
+              </nav>
+              <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-adjunta" role="tabpanel" aria-labelledby="nav-adjunta-tab">
+                  <div class="container-fluid">
+                    <div class="row d-flex justify-content-center">
+                      <div class="col-lg-8 col-md-8 col-sm-12">
+                        <div class="table-responsive">
+                          <table class="table">
+                            <tr>
+                              <td><input type="number" class="form-control" id="numMatriz00" placeholder="0"/></td>
+                              <td><input type="number" class="form-control" id="numMatriz01" placeholder="0"/></td>
+                              <td><input type="number" class="form-control" id="numMatriz02" placeholder="0"/></td>
+                            </tr>
+                            <tr>
+                            <td><input type="number" class="form-control" id="numMatriz10" placeholder="0" /></td>
+                            <td><input type="number" class="form-control" id="numMatriz11" placeholder="0" /></td>
+                            <td><input type="number" class="form-control" id="numMatriz12" placeholder="0" /></td>
+                            </tr>
+                            <tr>
+                            <td><input type="number" class="form-control" id="numMatriz20" placeholder="0" /></td>
+                            <td><input type="number" class="form-control" id="numMatriz21" placeholder="0" /></td>
+                            <td><input type="number" class="form-control" id="numMatriz22" placeholder="0" /></td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="separator"></div>
+                    <div class="row">
+                      <div class="col-md d-flex justify-content-center">
+                        <button type="button" class="btn btn-primary mb-2" id="btnCalcularAdjunta">Calcular</button>
+                      </div>
+                    </div>
+                    <div class="separator"></div>
+                    <div class="row">
+                      <div class="col-md d-flex justify-content-center" id="table_values">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="nav-crammer" role="tabpanel" aria-labelledby="nav-crammer-tab">
+                  <div class="container-fluid">
+                  <div class="row d-flex justify-content-center">
+                    <div class="col-lg-8 col-md-8 col-sm-12">
+                      <div class="table-responsive">
+                        <table class="table">
+                          <tr>
+                            <td><input type="number" class="form-control" id="c_numMatriz00" placeholder="0" /></td>
+                            <td><input type="number" class="form-control" id="c_numMatriz01" placeholder="0" /></td>
+                            <td><input type="number" class="form-control" id="c_numMatriz02" placeholder="0" /></td>
+                            <td><input type="number" class="form-control" id="c_numMatriz03" placeholder="0" /></td>
+                          </tr>
+                          <tr>
+                            <td><input type="number" class="form-control" id="c_numMatriz10" placeholder="0" /></td>
+                            <td><input type="number" class="form-control" id="c_numMatriz11" placeholder="0" /></td>
+                            <td><input type="number" class="form-control" id="c_numMatriz12" placeholder="0" /></td>
+                            <td><input type="number" class="form-control" id="c_numMatriz13" placeholder="0" /></td>
+                          </tr>
+                          <tr>
+                          <td><input type="number" class="form-control" id="c_numMatriz20" placeholder="0" /></td>
+                          <td><input type="number" class="form-control" id="c_numMatriz21" placeholder="0" /></td>
+                          <td><input type="number" class="form-control" id="c_numMatriz22" placeholder="0" /></td>
+                          <td><input type="number" class="form-control" id="c_numMatriz23" placeholder="0" /></td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="separator"></div>
+                  <div class="row">
+                    <div class="col-md d-flex justify-content-center">
+                      <button type="button" class="btn btn-primary mb-2" id="btnCalcularCrammer">Calcular</button>
+                    </div>
+                  </div>
+                  <div class="separator"></div>
+                  <div class="row">
+                    <div class="col-md d-flex justify-content-center" id="res_crammer">
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  
+
+  
+  <!-- jQuery CDN - Slim version (=without AJAX) -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <!-- Popper.JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+  <script src="../js/methods/matrices.js"></script>
+   <script type="text/javascript" charset="utf-8">
+     //otras configuraciones
+     $(document).ready(function() {
+     $('#sidebarCollapse').on('click', function() {
+     $('#sidebar').toggleClass('active');
+     });
+     $(".form-control").click(function() {
+     $(this).parent().addClass("label-animate");
+     });
+     $(window).click(function() {
+     if (!$(event.target).is('.form-control')) {
+     $(".form-control").each(function() {
+     if ($(this).val() == '') {
+     $(this).parent().removeClass("label-animate");
+     }
+     });
+     }
+     });
+     });
+   </script>
+  
+    <script type="text/javascript" charset="utf-8">
+    
+      function calcularAdjunta(){
+        let m00 = (document.getElementById("numMatriz00").value == "") ? 0 : Number(document.getElementById("numMatriz00").value);
+        
+        let m01 = (document.getElementById("numMatriz01").value == "") ? 0 : Number(document.getElementById("numMatriz01").value);
+        
+        let m02 = (document.getElementById("numMatriz02").value == "") ? 0 : Number(document.getElementById("numMatriz02").value);
+        
+        let m10 = (document.getElementById("numMatriz10").value == "") ? 0 : Number(document.getElementById("numMatriz10").value);
+        
+        let m11 = (document.getElementById("numMatriz11").value == "") ? 0 : Number(document.getElementById("numMatriz11").value);
+        
+        let m12 = (document.getElementById("numMatriz12").value == "") ? 0 : Number(document.getElementById("numMatriz12").value);
+        
+        let m20 = (document.getElementById("numMatriz20").value == "") ? 0 : Number(document.getElementById("numMatriz20").value);
+        
+        let m21 = (document.getElementById("numMatriz21").value == "") ? 0 : Number(document.getElementById("numMatriz21").value);
+        
+        let m22 = (document.getElementById("numMatriz22").value == "") ? 0 : Number(document.getElementById("numMatriz22").value);
+
+        let matriz = [
+          [m00, m01, m02],
+          [m10, m11, m12],
+          [m20, m21, m22]
+        ];
+        
+        let adjunta = Adjunta(matriz);
+        
+        if(adjunta != null){
+        let table = `<div class="table-responsive"><table class="table table-striped">`;
+        
+        for(let row of adjunta){
+          table += `<tr>`;
+          for(let col of row){
+            table += `<td>${col.toFixed(2)}</td>`;
+          }
+          table += `</tr>`;
+        }
+        
+        table += `</table></div>`;
+        
+        document.getElementById("table_values").innerHTML = table;
+          
+        }else{
+          document.getElementById("table_values").innerText = "El determinante es 0, no se puede calcular";
+        }
+      }
+      function calcularCrammer(){
+        let m00 = (document.getElementById("c_numMatriz00").value == "") ? 0 : Number(document.getElementById("c_numMatriz00").value);
+        
+        let m01 = (document.getElementById("c_numMatriz01").value == "") ? 0 : Number(document.getElementById("c_numMatriz01").value);
+        
+        let m02 = (document.getElementById("c_numMatriz02").value == "") ? 0 : Number(document.getElementById("c_numMatriz02").value);
+        
+        let m03 = (document.getElementById("c_numMatriz03").value == "") ? 0 : Number(document.getElementById("c_numMatriz03").value);
+        
+        let m10 = (document.getElementById("c_numMatriz10").value == "") ? 0 : Number(document.getElementById("c_numMatriz10").value);
+        
+        let m11 = (document.getElementById("c_numMatriz11").value == "") ? 0 : Number(document.getElementById("c_numMatriz11").value);
+        
+        let m12 = (document.getElementById("c_numMatriz12").value == "") ? 0 : Number(document.getElementById("c_numMatriz12").value);
+        
+        let m13 = (document.getElementById("c_numMatriz13").value == "") ? 0 : Number(document.getElementById("c_numMatriz13").value);
+        
+        let m20 = (document.getElementById("c_numMatriz20").value == "") ? 0 : Number(document.getElementById("c_numMatriz20").value);
+        
+        let m21 = (document.getElementById("c_numMatriz21").value == "") ? 0 : Number(document.getElementById("c_numMatriz21").value);
+        
+        let m22 = (document.getElementById("c_numMatriz22").value == "") ? 0 : Number(document.getElementById("c_numMatriz22").value);
+        
+        let m23 = (document.getElementById("c_numMatriz23").value == "") ? 0 : Number(document.getElementById("c_numMatriz23").value);
+
+        let matriz = [
+          [m00, m01, m02],
+          [m10, m11, m12],
+          [m20, m21, m22]
+        ];
+        
+        let resultados = [m03,m13,m23];
+        
+        let res = Crammer(matriz,resultados);
+        
+        if(res != null){
+        let table = `<div class="table-responsive"><table class="table table-striped">`;
+        
+        
+          table += `<tr>`;
+        
+          table += `<td>x =</td><td>${Number(res[0]).toFixed(2)}</td>`;
+        
+          table += `</tr>`;
+          
+          table += `<tr>`;
+          table += `<td>y =</td>
+            <td>${Number(res[1]).toFixed(2)}</td>`;
+            table += `
+          </tr>`;
+          table += `<tr>`;
+            table += `<td>z =</td>
+            <td>${Number(res[2]).toFixed(2)}</td>`;
+            table += `
+          </tr>`;
+        
+        table += `</table></div>`;
+        
+        document.getElementById("res_crammer").innerHTML = table;
+          
+        }else{
+          document.getElementById("res_crammer").innerText = "El determinante es 0, no se puede calcular";
+        }
+      }
+      document.getElementById("btnCalcularAdjunta").addEventListener("click", calcularAdjunta);
+      
+      document.getElementById("btnCalcularCrammer").addEventListener("click", calcularCrammer);
+    </script>
+</body>
+
+</html>
