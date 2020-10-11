@@ -69,6 +69,7 @@
                 <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                   <a class="nav-item nav-link active" id="nav-adjunta-tab" data-toggle="tab" href="#nav-adjunta" role="tab" aria-controls="nav-adjunta" aria-selected="true">Adjunta</a>
                   <a class="nav-item nav-link" id="nav-crammer-tab" data-toggle="tab" href="#nav-crammer" role="tab" aria-controls="nav-crammer" aria-selected="false">Crammer</a>
+                  <a class="nav-item nav-link" id="nav-lu-tab" data-toggle="tab" href="#nav-lu" role="tab" aria-controls="nav-lu" aria-selected="false">Descomposición LU</a>
                 </div>
               </nav>
               <div class="tab-content" id="nav-tabContent">
@@ -150,6 +151,47 @@
                     </div>
                   </div>
                   </div>
+                </div>
+                <div class="tab-pane fade" id="nav-lu" role="tabpanel" aria-labelledby="nav-lu-tab">
+                <div class="container-fluid">
+                  <div class="row d-flex justify-content-center">
+                    <div class="col-lg-8 col-md-8 col-sm-12">
+                      <div class="table-responsive">
+                        <table class="table">
+                          <tr>
+                            <td><input type="number" class="form-control" id="l_numMatriz00" placeholder="0" /></td>
+                            <td><input type="number" class="form-control" id="l_numMatriz01" placeholder="0" /></td>
+                            <td><input type="number" class="form-control" id="l_numMatriz02" placeholder="0" /></td>
+                            <td><input type="number" class="form-control" id="l_numMatriz03" placeholder="0" /></td>
+                          </tr>
+                          <tr>
+                            <td><input type="number" class="form-control" id="l_numMatriz10" placeholder="0" /></td>
+                            <td><input type="number" class="form-control" id="l_numMatriz11" placeholder="0" /></td>
+                            <td><input type="number" class="form-control" id="l_numMatriz12" placeholder="0" /></td>
+                            <td><input type="number" class="form-control" id="l_numMatriz13" placeholder="0" /></td>
+                          </tr>
+                          <tr>
+                            <td><input type="number" class="form-control" id="l_numMatriz20" placeholder="0" /></td>
+                            <td><input type="number" class="form-control" id="l_numMatriz21" placeholder="0" /></td>
+                            <td><input type="number" class="form-control" id="l_numMatriz22" placeholder="0" /></td>
+                            <td><input type="number" class="form-control" id="l_numMatriz23" placeholder="0" /></td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="separator"></div>
+                  <div class="row">
+                    <div class="col-md d-flex justify-content-center">
+                      <button type="button" class="btn btn-primary mb-2" id="btnCalcularLu">Calcular</button>
+                    </div>
+                  </div>
+                  <div class="separator"></div>
+                  <div class="row">
+                    <div class="col-md d-flex justify-content-center" id="res_lu">
+                    </div>
+                  </div>
+                </div>
                 </div>
               </div>
             </div>
@@ -301,9 +343,76 @@
           document.getElementById("res_crammer").innerText = "El determinante es 0, no se puede calcular";
         }
       }
+      
+      function calcularLU(){
+        let m00 = (document.getElementById("l_numMatriz00").value == "") ? 0 : Number(document.getElementById("l_numMatriz00").value);
+        
+        let m01 = (document.getElementById("l_numMatriz01").value == "") ? 0 : Number(document.getElementById("l_numMatriz01").value);
+        
+        let m02 = (document.getElementById("l_numMatriz02").value == "") ? 0 : Number(document.getElementById("l_numMatriz02").value);
+        
+        let m03 = (document.getElementById("l_numMatriz03").value == "") ? 0 : Number(document.getElementById("l_numMatriz03").value);
+        
+        let m10 = (document.getElementById("l_numMatriz10").value == "") ? 0 : Number(document.getElementById("l_numMatriz10").value);
+        
+        let m11 = (document.getElementById("l_numMatriz11").value == "") ? 0 : Number(document.getElementById("l_numMatriz11").value);
+        
+        let m12 = (document.getElementById("l_numMatriz12").value == "") ? 0 : Number(document.getElementById("l_numMatriz12").value);
+        
+        let m13 = (document.getElementById("l_numMatriz13").value == "") ? 0 : Number(document.getElementById("l_numMatriz13").value);
+        
+        let m20 = (document.getElementById("l_numMatriz20").value == "") ? 0 : Number(document.getElementById("l_numMatriz20").value);
+        
+        let m21 = (document.getElementById("l_numMatriz21").value == "") ? 0 : Number(document.getElementById("l_numMatriz21").value);
+        
+        let m22 = (document.getElementById("l_numMatriz22").value == "") ? 0 : Number(document.getElementById("l_numMatriz22").value);
+        
+        let m23 = (document.getElementById("l_numMatriz23").value == "") ? 0 : Number(document.getElementById("l_numMatriz23").value);
+
+        let matriz = [
+          [m00, m01, m02],
+          [m10, m11, m12],
+          [m20, m21, m22]
+        ];
+        
+        let resultados = [m03,m13,m23];
+        
+        let res = lu(matriz,resultados);
+        
+        if(res != null){
+        let table = `<div class="table-responsive"><table class="table table-striped">`;
+        
+        
+          table += `<tr>`;
+        
+          table += `<td>x =</td><td>${Number(res[0]).toFixed(2)}</td>`;
+        
+          table += `</tr>`;
+          
+          table += `<tr>`;
+          table += `<td>y =</td>
+            <td>${Number(res[1]).toFixed(2)}</td>`;
+            table += `
+          </tr>`;
+          table += `<tr>`;
+            table += `<td>z =</td>
+            <td>${Number(res[2]).toFixed(2)}</td>`;
+            table += `
+          </tr>`;
+        
+        table += `</table></div>`;
+        
+        document.getElementById("res_lu").innerHTML = table;
+          
+        }else{
+          document.getElementById("res_lu").innerText = "El determinante es 0, no se puede calcular";
+        }
+      }
       document.getElementById("btnCalcularAdjunta").addEventListener("click", calcularAdjunta);
       
       document.getElementById("btnCalcularCrammer").addEventListener("click", calcularCrammer);
+      
+      document.getElementById("btnCalcularLu").addEventListener("click", calcularLU);
     </script>
 </body>
 
